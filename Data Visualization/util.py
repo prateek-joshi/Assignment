@@ -76,6 +76,9 @@ def getBboxCoords(coords):
     return (xmin, ymin), (xmax, ymax)
 
 def drawPolygonsWithClasses(img_path, json_path, opacity):
+    # draws the polygons onto a blank canvas and adds it onto the image via a mask.
+    # Opacity is controlled by alpha
+
     items = getClassCoords(json_path)
     img = cv2.imread(img_path)
     blank = np.zeros_like(img, dtype=np.uint8)
@@ -96,6 +99,7 @@ def drawPolygonsWithClasses(img_path, json_path, opacity):
     # put label in bbox corners
     for item in items:
         # get text size for text background
+        # origin at top-left
         bbox = getBboxCoords(item[0])
         text_size, _ = cv2.getTextSize(item[1], cv2.FONT_HERSHEY_PLAIN, 1, 1)
         text_w, text_h = text_size
